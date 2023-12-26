@@ -6,21 +6,19 @@ import { useNavigate } from "react-router-dom";
 
 const MedalTableDropdown = ({ medalData }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [countryInfo, setCountryInfo] = useState(null);
-
-  
+  const [countryDetail, setCountryDetail] = useState(null);
 
   const options = medalData.map((country) => ({
     label: country.Country,
     value: country.Country,
   }));
 
-  const handleCountryChange = (selectedOption) => {
-    setSelectedCountry(selectedOption);
-    const selectedCountryInfo = medalData.find(
-      (country) => country.Country === selectedOption.value
+  const checkCountry = (e) => {
+    setSelectedCountry(e);
+    const selected = medalData.find(
+      (country) => country.Country === e.value
     );
-    setCountryInfo(selectedCountryInfo);
+    setCountryDetail(selected);
   };
 
   return (
@@ -29,31 +27,31 @@ const MedalTableDropdown = ({ medalData }) => {
         id="countries"
         options={options}
         value={selectedCountry}
-        onChange={handleCountryChange}
+        onChange={checkCountry}
         placeholder="-- 국가를 선택하세요 --"
       />
 
-      {countryInfo && (
+      {countryDetail && (
         <Info>
           <Name>
             <span>
-              #{countryInfo.Ranking} {countryInfo.Country}
+              #{countryDetail.Ranking} {countryDetail.Country}
             </span>
           </Name>
 
           <Medal>
             <MedalDetail>
-              금<MedalNum bgColor="#FFD700">{countryInfo.Gold}</MedalNum>
+              금<MedalNum bgColor="#FFD700">{countryDetail.Gold}</MedalNum>
             </MedalDetail>
             <MedalDetail>
-              은<MedalNum bgColor="#A3A3A3">{countryInfo.Silver}</MedalNum>
+              은<MedalNum bgColor="#A3A3A3">{countryDetail.Silver}</MedalNum>
             </MedalDetail>
             <MedalDetail>
-              동<MedalNum bgColor="#CD7F32">{countryInfo.Bronze}</MedalNum>
+              동<MedalNum bgColor="#CD7F32">{countryDetail.Bronze}</MedalNum>
             </MedalDetail>
             <MedalDetail>
               합산
-              <MedalNum bgColor="#5F85BB">{countryInfo.Total}</MedalNum>
+              <MedalNum bgColor="#5F85BB">{countryDetail.Total}</MedalNum>
             </MedalDetail>
           </Medal>
         </Info>

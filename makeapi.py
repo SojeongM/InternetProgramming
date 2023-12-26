@@ -9,7 +9,6 @@ client = MongoClient('localhost', 27017)
 db = client.medal  
 collection = db.country
 
-# API 엔드포인트
 @app.route('/medal', methods=['GET'])
 def get_data():
     data = list(collection.find({}, {'_id': 0}))  

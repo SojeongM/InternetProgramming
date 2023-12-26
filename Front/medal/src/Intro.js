@@ -3,63 +3,62 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Intro = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const Next = () => {
-      navigate("/medal");
+  const Next = () => {
+    navigate("/medal");
+  };
+  const [scrolling, setScroll] = useState(0);
+
+  const scroll = () => {
+    const h = window.innerHeight;
+    const y = window.scrollY;
+
+    setScroll(Math.min(y / h, 1));
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
     };
-    const [scrollOpacity, setScrollOpacity] = useState(0);
+  }, []);
 
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const opacity = Math.min(scrollPosition / windowHeight, 1);
-      setScrollOpacity(opacity);
-    };
+  const wallpaper = process.env.PUBLIC_URL + "/tokyo.jpg";
 
-    useEffect(() => {
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
-    
-    const wallpaper = process.env.PUBLIC_URL + "/tokyo.jpg"
-
-    return (
-      <div>
-        <Body>
-          <Main>
-            <Wall src={wallpaper} />
-            <Text>
-              <Big>2020 TOKYO OLYMPIC</Big>
-              <Small>2021-07-23 ~ 2021-08-08</Small>
-            </Text>
-          </Main>
-          <Info style={{ opacity: scrollOpacity }}>
-            <BigInfo>participation from</BigInfo>
-            205 countries <br />
-            5,000 individuals
-            <br />
-            <br />
-            archery, athletics, badminton, boxing, canoeing, and cycling to
-            equestrian sports, football, fencing, golf, gymnastics, handball,
-            hockey, judo, modern pentathlon, rowing, rugby, sailing, shooting,
-            swimming, taekwondo, tennis, triathlon, table tennis, volleyball,
-            weightlifting, wrestling, karate, skateboarding, surfing,
-            basketball, sport climbing, and baseball/softball
-            <br />
-            <NextLink onClick={Next}>see ranking -{">"}</NextLink>
-          </Info>
-        </Body>
-      </div>
-    );
-}
+  return (
+    <div>
+      <Body>
+        <Main>
+          <Wall src={wallpaper} />
+          <Text>
+            <Big>2020 TOKYO OLYMPIC</Big>
+            <Small>2021-07-23 ~ 2021-08-08</Small>
+          </Text>
+        </Main>
+        <Info style={{ opacity: scrolling }}>
+          <BigInfo>participation from</BigInfo>
+          205 countries <br />
+          5,000 individuals
+          <br />
+          <br />
+          archery, athletics, badminton, boxing, canoeing, and cycling to
+          equestrian sports, football, fencing, golf, gymnastics, handball,
+          hockey, judo, modern pentathlon, rowing, rugby, sailing, shooting,
+          swimming, taekwondo, tennis, triathlon, table tennis, volleyball,
+          weightlifting, wrestling, karate, skateboarding, surfing, basketball,
+          sport climbing, and baseball/softball
+          <br />
+          <NextLink onClick={Next}>see ranking -{">"}</NextLink>
+        </Info>
+      </Body>
+    </div>
+  );
+};
 
 const Wall = styled.img`
   width: 100%;
   object-fit: cover;
- 
 `;
 const Body = styled.div`
   background-color: #37436b;
@@ -68,7 +67,6 @@ const Body = styled.div`
 const Main = styled.div`
   position: relative;
   width: 100%;
-  
 `;
 const Text = styled.div`
   position: absolute;
@@ -103,12 +101,12 @@ const Info = styled.div`
   transition: opacity 0.5s ease;
 `;
 const BigInfo = styled.div`
-    font-size: 40px;
-    margin-bottom: 40px;
-    margin-top: 80px;
+  font-size: 40px;
+  margin-bottom: 40px;
+  margin-top: 80px;
 `;
 const NextLink = styled.div`
   margin-top: 30px;
   text-decoration: underline;
 `;
-export default Intro
+export default Intro;

@@ -13,8 +13,6 @@ driver = webdriver.Chrome()
 
 driver.get(url)
 soup = BeautifulSoup(driver.page_source,'html.parser')
-# result = driver.find_element(By.TAG_NAME, "p")
-# print(result)
 
 data =soup.select('tr')
 
@@ -24,7 +22,6 @@ crawled_data = crawled_data_xpath.text
 lines = crawled_data.split('\n')
 medal_data = []
 
-#
 for line in lines:
     data = line.split()
     if len(data) > 0:
@@ -62,6 +59,4 @@ for data in medal_data:
     collection.insert_one(document)
 
 client.close()
-
-
 driver.quit()
